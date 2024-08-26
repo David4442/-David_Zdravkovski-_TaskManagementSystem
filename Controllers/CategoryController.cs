@@ -71,8 +71,8 @@ namespace Exam.Controllers
             return Ok(category);
         }
     
-    //[Authorize(Roles = "Admin")]
-    [HttpPost]
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
         public async Task<IActionResult> CreateCategory([FromBody] CategoryDto categoryDto)
         {
             try
@@ -109,7 +109,7 @@ namespace Exam.Controllers
                 return NotFound();
             }
         }
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCategory(int id)
         {

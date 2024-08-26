@@ -27,7 +27,7 @@ namespace Exam.Controllers
         public async Task<IActionResult> GetAllTasks([FromQuery] PaginationParameters paginationParameters)
         {
             const string cacheKey = "all_tasks";
-            if (!_cache.TryGetValue(cacheKey, out IEnumerable<TaskItem> tasks))
+            if (!_cache.TryGetValue(cacheKey, out var tasks))
             {
               
                 tasks = await _taskService.GetAllTasks(paginationParameters);
@@ -71,7 +71,7 @@ namespace Exam.Controllers
 
             return Ok(task);
         }
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> CreateTask([FromBody] TaskDto taskDto)
         {
@@ -108,7 +108,7 @@ namespace Exam.Controllers
                 return NotFound();
             }
         }
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteTask(int id)
         {

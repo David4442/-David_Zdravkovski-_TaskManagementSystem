@@ -35,7 +35,7 @@ namespace Exam.Services
             {
                 Username = userDto.Username,
                 Email = userDto.Email,
-                Role = "User"
+                Role = userDto.Role,
             };
 
             user.PasswordHash = _passwordHasher.HashPassword(user, userDto.Password);

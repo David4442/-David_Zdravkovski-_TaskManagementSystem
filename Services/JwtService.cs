@@ -24,17 +24,21 @@ namespace Exam.Services
             {
             new Claim(JwtRegisteredClaimNames.Sub, user.Username),
             new Claim(JwtRegisteredClaimNames.Email, user.Email),
-            new Claim(ClaimTypes.Role, user.Role)
+            new Claim(ClaimTypes.Role, user.Role),
+              new Claim(JwtRegisteredClaimNames.Exp,
+            new DateTimeOffset(DateTime.UtcNow.AddMinutes(Convert.ToDouble(_config["JwtSettings:ExpiryMinutes"]))).ToUnixTimeSeconds().ToString())
         };
 
             var token = new JwtSecurityToken(
-                        issuer: "yourdomain.com",
-                audience: "yourdomain.com",
+                issuer: "Issuer",
+                audience: "Audience",
                 claims: claims,
-                expires: DateTime.Now.AddMinutes(Convert.ToDouble(_config["JwtSettings:ExpiryMinutes"])),
+                expires: DateTime.UtcNow.AddMinutes(Convert.ToDouble(_config["JwtSettings:ExpiryMinutes"])),
                 signingCredentials: credentials);
 
             return new JwtSecurityTokenHandler().WriteToken(token);
+
         }
+        
     }
 }
